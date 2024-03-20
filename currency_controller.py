@@ -20,3 +20,8 @@ class CurrencyController:
         cripto_float = float(cripto_replaced)
 
         return cripto_float
+    
+    @staticmethod
+    def formatDatabasisDate(dbdate):
+
+        return dbdate.strftime("%d/%m/%Y")    
