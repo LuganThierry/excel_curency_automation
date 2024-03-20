@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 import pyautogui
 import xlsxwriter
 import os
+from currency_controller import CurrencyController 
 
 
 open_browser = webdriver.Chrome()
@@ -94,27 +95,11 @@ get_cripto_ethereum = open_browser.find_elements(By.XPATH, '//*[@id="ticker-data
 
 get_cripto_solana = open_browser.find_elements(By.XPATH, '//*[@id="ticker-datagrid-table-content"]/tr[6]/td[2]/span')[0].text
 
-
-def convertStrinToFloat(currency):
-
-    currency_replaced = currency.replace(',','.')
-
-    currency_float = float(currency_replaced)
-
-    return currency_float
-
-def convertCriptoToFloat(cripto):
-
-    cripto_replaced = cripto.replace('R$ ', '').replace('.', '').replace(',', '.')
-
-    cripto_float = float(cripto_replaced)
-
-    return cripto_float
-
-
 file_path = 'C:\\Users\\lugan.costa\Desktop\\automation\\spreadsheets\\quoatition world currencies.xlsx'
 
 currencies_spreadsheet = xlsxwriter.Workbook(file_path)
+
+cc = CurrencyController()
 
 spreadsheet_1 = currencies_spreadsheet.add_worksheet()
 
@@ -134,30 +119,30 @@ spreadsheet_1.write('A13', 'Bitcoin')
 spreadsheet_1.write('A14', 'Ethereum')
 spreadsheet_1.write('A15', 'Solana')
 spreadsheet_1.write('B1', 'Purchase Price')
-spreadsheet_1.write('B2', convertStrinToFloat(get_argentinian_peso_purchase_price))
-spreadsheet_1.write('B3', convertStrinToFloat(get_autralian_dollar_purchase_price))
-spreadsheet_1.write('B4', convertStrinToFloat(get_canadian_dollar_purchase_price))
-spreadsheet_1.write('B5', convertStrinToFloat(get_swiss_franc_purchase_price))
-spreadsheet_1.write('B6', convertStrinToFloat(get_commecial_dollar_purchase_price))
-spreadsheet_1.write('B7', convertStrinToFloat(get_turism_dollar_purchase_price))
-spreadsheet_1.write('B8', convertStrinToFloat(get_euro_purchase_price))
-spreadsheet_1.write('B9', convertStrinToFloat(get_pound_sterling_purchase_price))
-spreadsheet_1.write('B10', convertStrinToFloat(get_yen_purchase_price))
-spreadsheet_1.write('B11', convertStrinToFloat(get_mozambican_metical))
-spreadsheet_1.write('B12', convertStrinToFloat(get_chinese_yuan))
-spreadsheet_1.write('B13', convertCriptoToFloat(get_cripto_bitcoin))
-spreadsheet_1.write('B14', convertCriptoToFloat(get_cripto_ethereum))
-spreadsheet_1.write('B15', convertCriptoToFloat(get_cripto_solana))
+spreadsheet_1.write('B2', cc.convertStringToFloat(get_argentinian_peso_purchase_price))
+spreadsheet_1.write('B3', cc.convertStringToFloat(get_autralian_dollar_purchase_price))
+spreadsheet_1.write('B4', cc.convertStringToFloat(get_canadian_dollar_purchase_price))
+spreadsheet_1.write('B5', cc.convertStringToFloat(get_swiss_franc_purchase_price))
+spreadsheet_1.write('B6', cc.convertStringToFloat(get_commecial_dollar_purchase_price))
+spreadsheet_1.write('B7', cc.convertStringToFloat(get_turism_dollar_purchase_price))
+spreadsheet_1.write('B8', cc.convertStringToFloat(get_euro_purchase_price))
+spreadsheet_1.write('B9', cc.convertStringToFloat(get_pound_sterling_purchase_price))
+spreadsheet_1.write('B10', cc.convertStringToFloat(get_yen_purchase_price))
+spreadsheet_1.write('B11', cc.convertStringToFloat(get_mozambican_metical))
+spreadsheet_1.write('B12', cc.convertStringToFloat(get_chinese_yuan))
+spreadsheet_1.write('B13', cc.convertCriptoToFloat(get_cripto_bitcoin))
+spreadsheet_1.write('B14', cc.convertCriptoToFloat(get_cripto_ethereum))
+spreadsheet_1.write('B15', cc.convertCriptoToFloat(get_cripto_solana))
 spreadsheet_1.write('C1', 'Selling Price')
-spreadsheet_1.write('C2', convertStrinToFloat(get_argentinian_peso_selling_price))
-spreadsheet_1.write('C3', convertStrinToFloat(get_autralian_dollar_selling_price))
-spreadsheet_1.write('C4', convertStrinToFloat(get_canadian_dollar_selling_price))
-spreadsheet_1.write('C5', convertStrinToFloat(get_swiss_franc_selling_price))
-spreadsheet_1.write('C6', convertStrinToFloat(get_commecial_dollar_selling_price))
-spreadsheet_1.write('C7', convertStrinToFloat(get_turism_dollar_selling_price))
-spreadsheet_1.write('C8', convertStrinToFloat(get_euro_selling_price))
-spreadsheet_1.write('C9', convertStrinToFloat(get_pound_sterling_selling_price))
-spreadsheet_1.write('C10', convertStrinToFloat(get_yen_selling_price))
+spreadsheet_1.write('C2', cc.convertStringToFloat(get_argentinian_peso_selling_price))
+spreadsheet_1.write('C3', cc.convertStringToFloat(get_autralian_dollar_selling_price))
+spreadsheet_1.write('C4', cc.convertStringToFloat(get_canadian_dollar_selling_price))
+spreadsheet_1.write('C5', cc.convertStringToFloat(get_swiss_franc_selling_price))
+spreadsheet_1.write('C6', cc.convertStringToFloat(get_commecial_dollar_selling_price))
+spreadsheet_1.write('C7', cc.convertStringToFloat(get_turism_dollar_selling_price))
+spreadsheet_1.write('C8', cc.convertStringToFloat(get_euro_selling_price))
+spreadsheet_1.write('C9', cc.convertStringToFloat(get_pound_sterling_selling_price))
+spreadsheet_1.write('C10', cc.convertStringToFloat(get_yen_selling_price))
 
 currencies_spreadsheet.close()
 
