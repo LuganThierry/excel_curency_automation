@@ -163,4 +163,9 @@ currencies_spreadsheet.close()
 
 os.startfile(file_path)
 
+# TO DO
+# Separar as funções em outro arquivo
+# Editar o tamanho das colunas do excel para visualizar as informações completas
+# Adicionar data e hora da extração da informação
+# Adicionar outras cotações
 
