@@ -54,7 +54,6 @@ open_browser.get('https://www.google.com/')
 
 pyautogui.sleep(0.5)
 
-
 search_mozambican_metical = open_browser.find_element(By.NAME, 'q').send_keys('Metical moçambicano')
 
 pyautogui.sleep(0.5)
@@ -83,6 +82,19 @@ search_chinese_yuan = open_browser.find_element(By.NAME, 'q').send_keys(Keys.RET
 
 get_chinese_yuan = open_browser.find_element(By.XPATH, '//*[@id="knowledge-currency__updatable-data-column"]/div[1]/div/span[1]').text
 
+pyautogui.sleep(0.5)
+
+open_browser.get('https://www.infomoney.com.br/cotacoes/cripto/')
+
+pyautogui.sleep(0.5)
+
+get_cripto_bitcoin = open_browser.find_elements(By.XPATH, '//*[@id="ticker-datagrid-table-content"]/tr[2]/td[2]/span')[0].text
+
+get_cripto_ethereum = open_browser.find_elements(By.XPATH, '//*[@id="ticker-datagrid-table-content"]/tr[3]/td[2]/span')[0].text
+
+get_cripto_solana = open_browser.find_elements(By.XPATH, '//*[@id="ticker-datagrid-table-content"]/tr[6]/td[2]/span')[0].text
+
+
 def convertStrinToFloat(currency):
 
     currency_replaced = currency.replace(',','.')
@@ -90,6 +102,14 @@ def convertStrinToFloat(currency):
     currency_float = float(currency_replaced)
 
     return currency_float
+
+def convertCriptoToFloat(cripto):
+
+    cripto_replaced = cripto.replace('R$ ', '').replace('.', '').replace(',', '.')
+
+    cripto_float = float(cripto_replaced)
+
+    return cripto_float
 
 
 file_path = 'C:\\Users\\lugan.costa\Desktop\\automation\\spreadsheets\\quoatition world currencies.xlsx'
@@ -110,6 +130,9 @@ spreadsheet_1.write('A9', 'Libra esterlina')
 spreadsheet_1.write('A10', 'Iene japonês')
 spreadsheet_1.write('A11', 'Metical moçambicano')
 spreadsheet_1.write('A12', 'Yuan chinês')
+spreadsheet_1.write('A13', 'Bitcoin')
+spreadsheet_1.write('A14', 'Ethereum')
+spreadsheet_1.write('A15', 'Solana')
 spreadsheet_1.write('B1', 'Purchase Price')
 spreadsheet_1.write('B2', convertStrinToFloat(get_argentinian_peso_purchase_price))
 spreadsheet_1.write('B3', convertStrinToFloat(get_autralian_dollar_purchase_price))
@@ -122,6 +145,9 @@ spreadsheet_1.write('B9', convertStrinToFloat(get_pound_sterling_purchase_price)
 spreadsheet_1.write('B10', convertStrinToFloat(get_yen_purchase_price))
 spreadsheet_1.write('B11', convertStrinToFloat(get_mozambican_metical))
 spreadsheet_1.write('B12', convertStrinToFloat(get_chinese_yuan))
+spreadsheet_1.write('B13', convertCriptoToFloat(get_cripto_bitcoin))
+spreadsheet_1.write('B14', convertCriptoToFloat(get_cripto_ethereum))
+spreadsheet_1.write('B15', convertCriptoToFloat(get_cripto_solana))
 spreadsheet_1.write('C1', 'Selling Price')
 spreadsheet_1.write('C2', convertStrinToFloat(get_argentinian_peso_selling_price))
 spreadsheet_1.write('C3', convertStrinToFloat(get_autralian_dollar_selling_price))
