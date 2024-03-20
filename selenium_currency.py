@@ -5,6 +5,7 @@ import pyautogui
 import xlsxwriter
 import os
 from currency_controller import CurrencyController 
+from datetime import date 
 
 
 open_browser = webdriver.Chrome()
@@ -15,39 +16,21 @@ pyautogui.sleep(0.5)
 
 get_argentinian_peso_purchase_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[1]/td[3]')[0].text
 
-get_argentinian_peso_selling_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[1]/td[4]')[0].text
-
 get_autralian_dollar_purchase_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[2]/td[3]')[0].text
-
-get_autralian_dollar_selling_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[2]/td[4]')[0].text
 
 get_canadian_dollar_purchase_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[3]/td[3]')[0].text
 
-get_canadian_dollar_selling_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[3]/td[4]')[0].text
-
 get_swiss_franc_purchase_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[4]/td[3]')[0].text
-
-get_swiss_franc_selling_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[4]/td[4]')[0].text
 
 get_commecial_dollar_purchase_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[5]/td[3]')[0].text
 
-get_commecial_dollar_selling_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[5]/td[4]')[0].text
-
 get_turism_dollar_purchase_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[6]/td[3]')[0].text
-
-get_turism_dollar_selling_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[6]/td[4]')[0].text
 
 get_euro_purchase_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[7]/td[3]')[0].text
 
-get_euro_selling_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[7]/td[4]')[0].text
-
 get_pound_sterling_purchase_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[8]/td[3]')[0].text
 
-get_pound_sterling_selling_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[8]/td[4]')[0].text
-
 get_yen_purchase_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[9]/td[3]')[0].text
-
-get_yen_selling_price = open_browser.find_elements(By.XPATH, '//*[@id="container_table"]/table/tbody/tr[9]/td[4]')[0].text
 
 pyautogui.sleep(0.5)
 
@@ -119,9 +102,13 @@ currencies_spreadsheet = xlsxwriter.Workbook(file_path)
 
 cc = CurrencyController()
 
+today = date.today()
+
 spreadsheet_1 = currencies_spreadsheet.add_worksheet()
 
-spreadsheet_1.write('A1', 'Currency')
+spreadsheet_1.set_column(0, 1, 25)
+
+spreadsheet_1.write('A1', 'Moeda')
 spreadsheet_1.write('A2', 'Peso argentino')
 spreadsheet_1.write('A3', 'Dólar australiano')
 spreadsheet_1.write('A4', 'Dólar canadense')
@@ -137,7 +124,7 @@ spreadsheet_1.write('A13', 'Franco ruandês')
 spreadsheet_1.write('A14', 'Bitcoin')
 spreadsheet_1.write('A15', 'Ethereum')
 spreadsheet_1.write('A16', 'Solana')
-spreadsheet_1.write('B1', 'Purchase Price')
+spreadsheet_1.write('B1', f'Cotação do dia {cc.formatDatabasisDate(today)}')
 spreadsheet_1.write('B2', cc.convertStringToFloat(get_argentinian_peso_purchase_price))
 spreadsheet_1.write('B3', cc.convertStringToFloat(get_autralian_dollar_purchase_price))
 spreadsheet_1.write('B4', cc.convertStringToFloat(get_canadian_dollar_purchase_price))
@@ -153,23 +140,13 @@ spreadsheet_1.write('B13', cc.convertStringToFloat(get_ruandan_franc))
 spreadsheet_1.write('B14', cc.convertCriptoToFloat(get_cripto_bitcoin))
 spreadsheet_1.write('B15', cc.convertCriptoToFloat(get_cripto_ethereum))
 spreadsheet_1.write('B16', cc.convertCriptoToFloat(get_cripto_solana))
-spreadsheet_1.write('C1', 'Selling Price')
-spreadsheet_1.write('C2', cc.convertStringToFloat(get_argentinian_peso_selling_price))
-spreadsheet_1.write('C3', cc.convertStringToFloat(get_autralian_dollar_selling_price))
-spreadsheet_1.write('C4', cc.convertStringToFloat(get_canadian_dollar_selling_price))
-spreadsheet_1.write('C5', cc.convertStringToFloat(get_swiss_franc_selling_price))
-spreadsheet_1.write('C6', cc.convertStringToFloat(get_commecial_dollar_selling_price))
-spreadsheet_1.write('C7', cc.convertStringToFloat(get_turism_dollar_selling_price))
-spreadsheet_1.write('C8', cc.convertStringToFloat(get_euro_selling_price))
-spreadsheet_1.write('C9', cc.convertStringToFloat(get_pound_sterling_selling_price))
-spreadsheet_1.write('C10', cc.convertStringToFloat(get_yen_selling_price))
+
 
 currencies_spreadsheet.close()
 
 os.startfile(file_path)
 
 # TO DO
-# Editar o tamanho das colunas do excel para visualizar as informações completas
 # Adicionar data e hora da extração da informação
 # Adicionar outras cotações
 # Aprofundar a arquitetura: adicionar banco de dados onde se persiste os dados várias vezes
