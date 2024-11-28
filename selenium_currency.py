@@ -5,7 +5,7 @@ import pyautogui
 import xlsxwriter
 import os
 from currency_controller import CurrencyController 
-from datetime import date 
+from datetime import datetime
 
 # open_browser = webdriver.Chrome()
 open_browser = webdriver.Edge()
@@ -90,11 +90,13 @@ open_browser.get('https://www.infomoney.com.br/cotacoes/cripto/')
 
 pyautogui.sleep(0.5)
 
-get_cripto_bitcoin = open_browser.find_elements(By.XPATH, '//*[@id="ticker-datagrid-table-content"]/tr[2]/td[2]/span')[0].text
+get_cripto_bitcoin = open_browser.find_elements(By.XPATH, '//*[@id="ticker-datagrid-table-content"]/tr[1]/td[2]/span')[0].text
 
-get_cripto_ethereum = open_browser.find_elements(By.XPATH, '//*[@id="ticker-datagrid-table-content"]/tr[3]/td[2]/span')[0].text
+get_cripto_ethereum = open_browser.find_elements(By.XPATH, '//*[@id="ticker-datagrid-table-content"]/tr[2]/td[2]/span')[0].text
 
-get_cripto_solana = open_browser.find_elements(By.XPATH, '//*[@id="ticker-datagrid-table-content"]/tr[6]/td[2]/span')[0].text
+get_cripto_solana = open_browser.find_elements(By.XPATH, '//*[@id="ticker-datagrid-table-content"]/tr[5]/td[2]/span')[0].text
+
+get_cripto_cardano = open_browser.find_element(By.XPATH, '//*[@id="ticker-datagrid-table-content"]/tr[10]/td[2]/span').text
 
 file_path = 'C:\\Users\\lugan.costa\Desktop\\scraping studies\\automation\\spreadsheets\\quoatition world currencies.xlsx'
 
@@ -102,11 +104,11 @@ currencies_spreadsheet = xlsxwriter.Workbook(file_path)
 
 cc = CurrencyController()
 
-today = date.today()
+today = datetime.now()
 
 spreadsheet_1 = currencies_spreadsheet.add_worksheet()
 
-spreadsheet_1.set_column(0, 1, 25)
+spreadsheet_1.set_column(0, 1, 35)
 
 spreadsheet_1.write('A1', 'Moeda')
 spreadsheet_1.write('A2', 'Peso argentino')
@@ -124,6 +126,7 @@ spreadsheet_1.write('A13', 'Franco ruandês')
 spreadsheet_1.write('A14', 'Bitcoin')
 spreadsheet_1.write('A15', 'Ethereum')
 spreadsheet_1.write('A16', 'Solana')
+spreadsheet_1.write('A17', 'Cardano')
 spreadsheet_1.write('B1', f'Cotação do dia {cc.formatDatabasisDate(today)}')
 spreadsheet_1.write('B2', cc.convertStringToFloat(get_argentinian_peso_purchase_price))
 spreadsheet_1.write('B3', cc.convertStringToFloat(get_autralian_dollar_purchase_price))
@@ -140,6 +143,7 @@ spreadsheet_1.write('B13', cc.convertStringToFloat(get_ruandan_franc))
 spreadsheet_1.write('B14', cc.convertCriptoToFloat(get_cripto_bitcoin))
 spreadsheet_1.write('B15', cc.convertCriptoToFloat(get_cripto_ethereum))
 spreadsheet_1.write('B16', cc.convertCriptoToFloat(get_cripto_solana))
+spreadsheet_1.write('B17', cc.convertCriptoToFloat(get_cripto_cardano))
 
 
 currencies_spreadsheet.close()
@@ -147,7 +151,6 @@ currencies_spreadsheet.close()
 os.startfile(file_path)
 
 # TO DO
-# Adicionar data e hora da extração da informação
 # Adicionar outras cotações
 # Aprofundar a arquitetura: adicionar banco de dados onde se persiste os dados várias vezes
 # Criação de API que gera o relatório a partir da cotação dos últimos 30 dias
