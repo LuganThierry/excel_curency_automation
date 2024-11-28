@@ -24,4 +24,4 @@ class CurrencyController:
     @staticmethod
     def formatDatabasisDate(dbdate):
 
-        return dbdate.strftime("%d/%m/%Y")    
+        return dbdate.strftime("%d/%m/%Y %Hh%Mmin")    
