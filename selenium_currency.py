@@ -7,8 +7,8 @@ import os
 from currency_controller import CurrencyController 
 from datetime import date 
 
-
-open_browser = webdriver.Chrome()
+# open_browser = webdriver.Chrome()
+open_browser = webdriver.Edge()
 
 open_browser.get('https://www.infomoney.com.br/ferramentas/cambio/')
 
@@ -96,7 +96,7 @@ get_cripto_ethereum = open_browser.find_elements(By.XPATH, '//*[@id="ticker-data
 
 get_cripto_solana = open_browser.find_elements(By.XPATH, '//*[@id="ticker-datagrid-table-content"]/tr[6]/td[2]/span')[0].text
 
-file_path = 'C:\\Users\\lugan.costa\Desktop\\automation\\spreadsheets\\quoatition world currencies.xlsx'
+file_path = 'C:\\Users\\lugan.costa\Desktop\\scraping studies\\automation\\spreadsheets\\quoatition world currencies.xlsx'
 
 currencies_spreadsheet = xlsxwriter.Workbook(file_path)
 
